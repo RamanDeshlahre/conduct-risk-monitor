@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/interim/
+data/warehouse.duckdb*
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml
+.env
+# data/marts and reports ARE committed: they're small and the deployed dashboard reads them.
+.pytest_cache/
+# Private notes kept out of the public repo
+docs/interview_prep.md
