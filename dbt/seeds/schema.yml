@@ -1,0 +1,8 @@
+version: 2
+
+seeds:
+  - name: firm_name_overrides
+    description: Manual mapping for firm names the normaliser can't reconcile. Reviewed like code.
+    columns:
+      - name: firm_key_from
+        data_tests: [not_null, unique]

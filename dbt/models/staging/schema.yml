@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_fca__firm_complaints
+    description: Cleaned FCA complaints returns.
+    columns:
+      - name: value
+        data_tests: [not_null]
+  - name: stg_fos__decisions
+    description: Cleaned ombudsman decisions, one row per decision reference.
+    columns:
+      - name: drn
+        data_tests: [not_null, unique]
+      - name: is_upheld
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
+      - name: consumer_duty_outcome
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [products_and_services, price_and_value, consumer_understanding, consumer_support, unmapped]

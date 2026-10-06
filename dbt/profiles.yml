@@ -1,0 +1,17 @@
+# No secrets live here. DuckDB is a local file; BigQuery uses your gcloud login (oauth).
+conduct_risk_monitor:
+  target: "{{ env_var('CRM_TARGET', 'duckdb') }}"
+  outputs:
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('CRM_DUCKDB_PATH', '../data/warehouse.duckdb') }}"
+      schema: main
+      threads: 4
+    bigquery:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('CRM_GCP_PROJECT', 'your-gcp-project-id') }}"
+      dataset: crm
+      location: europe-west2
+      threads: 4
+      job_execution_timeout_seconds: 300

@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Tables loaded by `python -m crm.warehouse load`.
+    schema: "{{ 'crm_raw' if target.type == 'bigquery' else 'raw' }}"
+    tables:
+      - name: fca_firm_complaints
+        description: FCA firm-level complaints returns in long format (period x firm x product group x metric).
+        columns:
+          - name: period
+            data_tests: [not_null]
+          - name: firm_key
+            data_tests: [not_null]
+          - name: metric
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: [opened, closed, pct_closed_within_3d, pct_closed_3d_to_8w, pct_upheld,
+                             context_provision, context_intermediation, consumer_credit]
+      - name: fos_decisions_enriched
+        description: Financial Ombudsman final decisions with themes and Consumer Duty mapping.
+        loaded_at_field: decision_date
+        freshness:
+          warn_after: {count: 45, period: day}
+          error_after: {count: 90, period: day}
+        columns:
+          - name: drn
+            data_tests: [not_null, unique]
+          - name: outcome
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ["Upheld", "Not upheld"]

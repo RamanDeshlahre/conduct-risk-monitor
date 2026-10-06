@@ -1,0 +1,86 @@
+# UK Conduct Risk Early-Warning Monitor: project configuration
+# Every tunable number lives here, so the code never hides a business decision.
+
+project:
+  name: UK Conduct Risk Early-Warning Monitor
+  # Used in the scraper's User-Agent so the site owner can contact you. Change this.
+  contact_email: your.email@example.com
+
+paths:
+  raw: data/raw
+  interim: data/interim
+  marts: data/marts
+  reports: reports
+
+warehouse:
+  target: duckdb                 # duckdb (local, free) or bigquery (cloud)
+  duckdb_path: data/warehouse.duckdb
+  bigquery_project: your-gcp-project-id
+  bigquery_dataset_raw: crm_raw
+  bigquery_dataset_marts: crm_marts
+  bigquery_location: europe-west2   # London region
+
+# FCA firm-level complaints data. URLs taken from the FCA "Previous complaints data" page.
+# 2019 H1 onwards uses a consistent layout. H1 2026 is due on 22 October 2026:
+# check the URL on the FCA site and add it here when it lands.
+fca:
+  sortable_table_url: https://www.fca.org.uk/data/firm-level-complaints-data-sortable-table
+  periods:
+    - {period: 2019H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2019-h1.xlsx}
+    - {period: 2019H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2019-h2.xlsx}
+    - {period: 2020H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2020-h1.xlsx}
+    - {period: 2020H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2020-h2.xlsx}
+    - {period: 2021H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2021-h1.xlsx}
+    - {period: 2021H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2021-h2.xlsx}
+    - {period: 2022H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2022-h1.xlsx}
+    - {period: 2022H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2022-h2.xlsx}
+    - {period: 2023H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2023-h1.xlsx}
+    - {period: 2023H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2023-h2.xlsx}
+    - {period: 2024H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2024-h1.xlsx}
+    - {period: 2024H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2024-h2.xlsx}
+    - {period: 2025H1, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2025-h1.xlsx}
+    - {period: 2025H2, url: https://www.fca.org.uk/publication/data/firm-level-complaints-data-2025-h2.xlsx}
+
+# Financial Ombudsman Service published decisions.
+# Listing pages give 10 decisions each: reference, date, firm, outcome, sector and a short summary.
+fos:
+  base_url: https://www.financial-ombudsman.org.uk
+  search_path: /businesses/resolving-complaint/ombudsman-decisions/search
+  page_size: 10
+  # Earliest decision date to crawl. Sent to the site as DateFrom, with Sort=date, so the crawl is
+  # bounded server-side. June 2026 gives the most recent three months (the site publishes with a lag of
+  # several weeks). The FOS early-warning test needs fos_min_baseline_months of history, and the model's
+  # default month-based split needs test_months + validation_months + a training period, so set this
+  # back to 2023-01-01 (a few hours' crawl) for the full monthly signal.
+  min_date: "2026-06-01"
+  max_pages: 15000               # hard ceiling, roughly 150,000 decisions
+  delay_seconds: 1.5             # be polite: one request every 1.5 seconds
+  checkpoint_every: 50           # save progress every 50 pages so a crash loses nothing
+  # Any extra search filters, e.g. {"IndustrySectorID[1]": 1}. DateFrom and Sort=date are always sent.
+  extra_params: {}
+  complete_month_tolerance_days: 3   # a month is complete once its decisions reach within 3 days of month end
+  pdf_sample_size: 20000         # full decision PDFs to download for richer text and redress amounts
+  pdf_sample_min_date: "2024-01-01"
+
+early_warning:
+  fca_min_history: 4             # half-years of history a firm needs before we judge it
+  fca_z_amber: 2.0
+  fca_z_red: 3.0
+  fca_peer_percentile: 0.90      # top decile of a product group counts as an outlier
+  fca_min_opened: 100            # ignore firm-product pairs with fewer complaints than this in the latest half-year
+  fos_baseline_months: 12        # trailing window for a firm-theme's normal decision volume
+  fos_min_baseline_months: 6
+  fos_min_count: 5               # ignore spikes built on tiny numbers
+  fos_q_amber: 0.10              # Benjamini-Hochberg adjusted p-values
+  fos_q_red: 0.01
+
+model:
+  test_months: 6                 # newest 6 months are held out, so we always predict the future
+  validation_months: 3           # last 3 months of training data tune the threshold
+  # With less history than test + validation + min_train_months, fall back to splitting by decision
+  # date in these proportions (oldest to newest). Still strictly time-ordered: no future leakage.
+  min_train_months: 3
+  fallback_split: [0.60, 0.15, 0.25]
+  min_df: 5
+  max_features: 50000
+  random_state: 42

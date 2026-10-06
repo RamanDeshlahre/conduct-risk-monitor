@@ -1,0 +1,22 @@
+name: conduct_risk_monitor
+version: "1.0.0"
+config-version: 2
+profile: conduct_risk_monitor
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  conduct_risk_monitor:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  conduct_risk_monitor:
+    +schema: seeds

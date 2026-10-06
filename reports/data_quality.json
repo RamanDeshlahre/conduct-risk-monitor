@@ -1,0 +1,147 @@
+{
+  "fos": {
+    "rows": 7857,
+    "duplicate_drn": 0,
+    "missing_date": 0,
+    "missing_firm": 0,
+    "empty_model_text": 7,
+    "full_text_share": 0.0,
+    "outcome_crosscheck_n": 0,
+    "outcome_crosscheck_agreement": null,
+    "leaky_sentences_in_raw_complaint_text": 0.0079,
+    "leakage_rate_model_text": 0.0,
+    "theme_coverage": 0.5776,
+    "date_min": "2026-06-01",
+    "date_max": "2026-09-15",
+    "uphold_rate": 0.2356,
+    "unexpected_outcome_values": 0,
+    "snippet_without_complaint_heading": 16,
+    "decisions_by_month": {
+      "2026-06-01": 3452,
+      "2026-07-01": 2864,
+      "2026-08-01": 1540,
+      "2026-09-01": 1
+    },
+    "decisions_by_sector": {
+      "Banking and Payments": 3443,
+      "Consumer Credit": 1912,
+      "Insurance": 1831,
+      "Investments": 260,
+      "Mortgages": 230,
+      "Pensions and Annuities": 167,
+      "Funeral Planning Services": 9,
+      "Claims Management": 5
+    },
+    "theme_counts": {
+      "other": 3319,
+      "app_scam": 1108,
+      "motor_finance": 591,
+      "affordability": 537,
+      "claim_declined": 503,
+      "card_disputes": 447,
+      "financial_difficulty": 280,
+      "account_restrictions": 246,
+      "premiums_charges": 243,
+      "service_delay": 233,
+      "advice_suitability": 161,
+      "communication": 105,
+      "credit_reporting": 84
+    },
+    "decisions_against_firms_in_fca_data": 0.7948
+  },
+  "fca": {
+    "periods": [
+      "2019H1",
+      "2019H2",
+      "2020H1",
+      "2020H2",
+      "2021H1",
+      "2021H2",
+      "2022H1",
+      "2022H2",
+      "2023H1",
+      "2023H2",
+      "2024H1",
+      "2024H2",
+      "2025H1",
+      "2025H2"
+    ],
+    "rows": 40722,
+    "firms_per_period": {
+      "2019H1": 293,
+      "2019H2": 292,
+      "2020H1": 280,
+      "2020H2": 283,
+      "2021H1": 289,
+      "2021H2": 269,
+      "2022H1": 274,
+      "2022H2": 267,
+      "2023H1": 289,
+      "2023H2": 291,
+      "2024H1": 289,
+      "2024H2": 290,
+      "2025H1": 288,
+      "2025H2": 293
+    },
+    "firms_with_opened_data_per_period": {
+      "2019H1": 222,
+      "2019H2": 222,
+      "2020H1": 228,
+      "2020H2": 229,
+      "2021H1": 234,
+      "2021H2": 214,
+      "2022H1": 213,
+      "2022H2": 212,
+      "2023H1": 232,
+      "2023H2": 233,
+      "2024H1": 229,
+      "2024H2": 220,
+      "2025H1": 218,
+      "2025H2": 219
+    },
+    "complaints_opened_per_period": {
+      "2019H1": 4191329,
+      "2019H2": 5916736,
+      "2020H1": 2859339,
+      "2020H2": 2090861,
+      "2021H1": 1925580,
+      "2021H2": 1740653,
+      "2022H1": 1778323,
+      "2022H2": 1671155,
+      "2023H1": 1781451,
+      "2023H2": 1772741,
+      "2024H1": 1774139,
+      "2024H2": 1692066,
+      "2025H1": 1740222,
+      "2025H2": 1652438
+    },
+    "duplicate_rows_resolved": 14,
+    "percentages_outside_0_100_dropped": [
+      {
+        "period": "2022H1",
+        "metric": "pct_closed_within_3d",
+        "rows": 1
+      },
+      {
+        "period": "2022H2",
+        "metric": "pct_upheld",
+        "rows": 1
+      },
+      {
+        "period": "2024H2",
+        "metric": "consumer_credit",
+        "rows": 1
+      }
+    ],
+    "rows_by_metric": {
+      "closed": 6149,
+      "consumer_credit": 6100,
+      "context_intermediation": 1323,
+      "context_provision": 4616,
+      "opened": 6107,
+      "pct_closed_3d_to_8w": 5536,
+      "pct_closed_within_3d": 5415,
+      "pct_upheld": 5476
+    }
+  }
+}

@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: fca_firm_period
+    description: FCA complaints returns pivoted to one row per firm, product group and half-year.
+    columns:
+      - name: firm_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('firm_dim')
+                field: firm_key
+  - name: fos_firm_theme_month
+    description: Ombudsman decisions per firm, theme and month.
+    columns:
+      - name: decisions
+        data_tests: [not_null]
+      - name: firm_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('firm_dim')
+                field: firm_key
+  - name: fos_market_month
+    description: Market-wide decisions by month, sector and theme.
+  - name: fos_month_coverage
+    description: Decisions per month and the last decision date published, used to find complete months.
+    columns:
+      - name: decision_month
+        data_tests: [not_null, unique]
+  - name: firm_dim
+    description: Every firm seen in either source.
+    columns:
+      - name: firm_key
+        data_tests: [not_null, unique]

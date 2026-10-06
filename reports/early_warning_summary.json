@@ -1,0 +1,14 @@
+{
+  "fca_period": "2025H2",
+  "fca_firm_products_tested": 426,
+  "fca_firm_products_with_enough_history": 349,
+  "fos_month": "2026-07-01",
+  "fos_status": "skipped (needs 6 complete months of history before July 2026; has 1)",
+  "fos_complete_months_of_history": 1,
+  "fos_firm_themes_tested": 0,
+  "red_signals": 18,
+  "amber_signals": 38,
+  "red_firms": 18,
+  "amber_only_firms": 35,
+  "firms_flagged": 53
+}

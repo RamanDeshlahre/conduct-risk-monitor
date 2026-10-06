@@ -1,0 +1,51 @@
+/* Tokens: cool paper, ink, one petrol accent. RAG colours are reserved for status only. */
+:root {
+  --paper: #F5F7F9;
+  --ink: #17202A;
+  --muted: #56616E;
+  --rule: #D5DBE1;
+  --accent: #0B5D66;
+  --red: #B42318;
+  --amber: #A15C07;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+}
+
+html, body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+.page { max-width: 1180px; margin: 0 auto; padding: 32px 24px 48px; }
+
+.masthead { border-bottom: 1px solid var(--rule); padding-bottom: 16px; margin-bottom: 8px; }
+.masthead h1 { font-family: var(--serif); font-weight: 600; font-size: 1.75rem; margin: 0; letter-spacing: -0.01em; }
+.tagline { color: var(--muted); margin: 4px 0 0; }
+
+/* The hero is the sentence itself: what a Head of Compliance needs to know, at reading size. */
+.hero { font-family: var(--serif); font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 2.75rem); line-height: 1.15;
+        margin: 28px 0 6px; max-width: 22ch; font-variant-numeric: lining-nums; }
+.hero-sub, .lede { color: var(--muted); max-width: 70ch; margin: 0 0 20px; }
+
+h3 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 36px 0 8px; }
+h4 { font-size: 1rem; font-weight: 600; margin: 16px 0 4px; }
+
+.tabs-parent { margin-top: 8px; }
+.tab { border: none !important; border-bottom: 2px solid transparent !important; background: transparent !important;
+       color: var(--muted) !important; font-weight: 600; padding: 10px 4px !important; margin-right: 24px; }
+.tab--selected { color: var(--ink) !important; border-bottom: 2px solid var(--accent) !important; }
+.tab:focus-visible, .button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 4px 0 16px; }
+.rag-filter label { margin-right: 18px; cursor: pointer; }
+.button { font: 600 0.95rem var(--sans); color: #fff; background: var(--accent); border: none; border-radius: 4px;
+          padding: 8px 14px; cursor: pointer; }
+.button:hover { background: #084A51; }
+.status { color: var(--muted); font-size: 0.9rem; }
+
+.field-label { display: block; font-weight: 600; margin: 24px 0 6px; }
+.firm-select { max-width: 520px; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.terms p { color: var(--muted); }
+.footer { color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--rule); margin-top: 48px; padding-top: 12px; }
+
+.dash-table-container { overflow-x: auto; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

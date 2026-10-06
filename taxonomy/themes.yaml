@@ -1,0 +1,146 @@
+# Complaint theme taxonomy.
+# Rules are deliberately transparent: a compliance reviewer can read exactly why a case
+# landed in a theme, which a black-box topic model can't offer. The NMF discovery step
+# (crm.themes discover) surfaces language this file misses, so the taxonomy can grow.
+#
+# The Consumer Duty mapping is analyst judgement, not FCA guidance. Each mapping has a
+# rationale so the choice can be challenged and changed.
+#
+# Order sets priority: a complaint matching several themes takes the first as its primary theme.
+
+themes:
+  - id: app_scam
+    label: Scams and fraud reimbursement
+    consumer_duty_outcome: consumer_support
+    rationale: Turns on whether the firm protected and supported the customer when payments looked risky.
+    patterns:
+      - '\bscam(s|med|mer|mers)?\b'
+      - '\bfraud(ulent|ster|sters)?\b'
+      - '\bauthori[sz]ed push payment\b'
+      - '\bapp\b.*\breimburs'
+      - '\breimburse\w*\b.*\b(loss|losses|payments?)\b'
+      - '\bunauthori[sz]ed (payment|transaction)s?\b'
+
+  - id: motor_finance
+    label: Motor finance and commission
+    consumer_duty_outcome: price_and_value
+    rationale: Undisclosed or discretionary commission goes to whether the customer paid a fair price.
+    patterns:
+      - '\b(car|motor|vehicle) finance\b'
+      - '\bhire purchase\b'
+      - '\bconditional sale\b'
+      - '\bpersonal contract purchase\b|\bpcp\b'
+      - '\bcommission\b'
+      - '\bsupplied (to (him|her|them)|a car)\b'
+
+  - id: affordability
+    label: Irresponsible or unaffordable lending
+    consumer_duty_outcome: products_and_services
+    rationale: Lending that was unaffordable means the product was not suitable for the customer.
+    patterns:
+      - '\birresponsibl[ey]\b'
+      - '\bunaffordable\b'
+      - '\baffordability\b'
+      - '\b(shouldn|should not|should never)\S* have (lent|given|provided|approved|increased)\b'
+      - '\bcredit limit increases?\b'
+
+  - id: financial_difficulty
+    label: Financial difficulty, arrears and vulnerability
+    consumer_duty_outcome: consumer_support
+    rationale: Treatment of customers in difficulty or with characteristics of vulnerability is support.
+    patterns:
+      - '\bfinancial difficult(y|ies)\b'
+      - '\barrears\b'
+      - '\bvulnerab(le|ility)\b'
+      - '\b(debt )?collection\b'
+      - '\brepayment (plan|arrangement)\b'
+      - '\bdefault(ed)?\b'
+      - '\b(anxiety|mental health|bereave\w*)\b'
+
+  - id: claim_declined
+    label: Insurance claim declined or settled unfairly
+    consumer_duty_outcome: consumer_support
+    rationale: Claims handling is the moment the customer relies on the firm's support.
+    patterns:
+      - '\bdeclin\w* (the |his |her |their |a )?claim\b'
+      - '\bclaim\w*\b.*\b(declin|reject|refus|settle|repudiat)\w*'
+      - '\bescape of water\b|\bstorm damage\b|\bsubsidence\b'
+      - '\b(policy|cover) (exclusion|excluded)\b'
+
+  - id: premiums_charges
+    label: Premiums, fees, charges and interest
+    consumer_duty_outcome: price_and_value
+    rationale: Whether what the customer paid was reasonable relative to the benefit.
+    patterns:
+      - '\bpremiums?\b.*\b(increase|rise|rose|went up)\w*'
+      - '\b(fees?|charges?)\b'
+      - '\binterest (rate|charged)\b'
+      - '\b(early )?repayment charge\b|\berc\b'
+      - '\bprice walking\b|\brenewal price\b'
+
+  - id: advice_suitability
+    label: Unsuitable advice or mis-sold product
+    consumer_duty_outcome: products_and_services
+    rationale: The product or recommendation did not meet the customer's needs.
+    patterns:
+      - '\bunsuitable\b'
+      - '\bmis-?sold\b|\bmis-?selling\b'
+      - '\badvice\b|\badvised\b|\badviser\b'
+      - '\bpension transfer\b|\bdefined benefit\b'
+      - '\bnot in accordance with (his|her|their) objectives\b'
+
+  - id: communication
+    label: Misleading or unclear information
+    consumer_duty_outcome: consumer_understanding
+    rationale: The customer could not understand what they were buying or what was happening.
+    patterns:
+      - '\bmislead\w*\b|\bmisled\b'
+      - '\b(wasn|was not|weren|were not)\S* (told|informed|made aware)\b'
+      - '\bfailed to (inform|tell|explain|notify|discuss)\b'
+      - '\bunclear\b|\bconfusing\b'
+      - '\bincorrect information\b|\bwrong information\b'
+
+  - id: account_restrictions
+    label: Account closure, blocks and restrictions
+    consumer_duty_outcome: consumer_support
+    rationale: Blocking or closing accounts affects access to essential services and needs fair handling.
+    patterns:
+      - '\b(closed|close|closure of) (his|her|their|the) accounts?\b'
+      - '\baccount (closure|was closed|block\w*|restrict\w*|suspend\w*|frozen)\b'
+      - '\b(blocked|restricted|froze|frozen|suspended)\b.*\baccount\b'
+      - '\bcifas\b|\bfraud marker\b'
+
+  - id: card_disputes
+    label: Card disputes, chargeback and section 75
+    consumer_duty_outcome: consumer_support
+    rationale: Using the protections customers are entitled to when a purchase goes wrong.
+    patterns:
+      - '\bsection 75\b|\bs75\b'
+      - '\bchargeback\b'
+      - '\bconsumer credit act\b'
+
+  - id: service_delay
+    label: Delays and poor service
+    consumer_duty_outcome: consumer_support
+    rationale: Timeliness and quality of service is the core of the support outcome.
+    patterns:
+      - '\bdelays?\b|\bdelayed\b'
+      - '\bpoor service\b|\bcustomer service\b'
+      - '\btook too long\b|\bslow\b'
+      - '\b(administer|administered|administration)\b'
+
+  - id: credit_reporting
+    label: Credit file and data errors
+    consumer_duty_outcome: consumer_support
+    rationale: Inaccurate reporting harms the customer's access to credit after the fact.
+    patterns:
+      - '\bcredit (file|report|record|score)\b'
+      - '\badverse information\b'
+      - '\bdata protection\b|\bpersonal data\b'
+
+consumer_duty_outcomes:
+  products_and_services: Products and services
+  price_and_value: Price and value
+  consumer_understanding: Consumer understanding
+  consumer_support: Consumer support
+  unmapped: Not mapped
